@@ -3,14 +3,33 @@ import { useAuth } from "./providers/AuthProvider";
 import SignIn from './components/SignIn';
 import Inventory from './components/Inventory';
 import ItemHistory from './components/ItemHistory';
-import { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import ItemView from './components/ItemView';
 
 function App() {
   const { user, logout } = useAuth();
   const [currentPage, setCurrentPage] = useState('inventory');
-  
+
+  // Define ProtectedRoute component
+  const ProtectedRoute = ({ children }) => {
+    if (!user) {
+      const currentPath = window.location.pathname;
+      return <Navigate to={`/?redirect=${currentPath}`} replace />;
+    }
+    return children;
+  };
+
+  // Define renderPage function
+  const renderPage = () => {
+    switch (currentPage) {
+      case 'history':
+        return <ItemHistory />;
+      default:
+        return <Inventory />;
+    }
+  };
+
   // Get redirect from URL parameters
   const getRedirectPath = () => {
     const params = new URLSearchParams(window.location.search);
