@@ -1,0 +1,675 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+button {
+  font-size: 1.2em;
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #61dafb;
+  color: #282c34;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #4fa8c7;
+}
+
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+.auth-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 300px;
+}
+
+.auth-container input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.error {
+  color: #ff6b6b;
+  margin: 0.5rem 0;
+}
+
+.inventory-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.add-item-form {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.add-item-form form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.add-item-form input,
+.add-item-form textarea {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.inventory-list table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+.inventory-list th,
+.inventory-list td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.inventory-list th {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.inventory-page {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.inventory-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.add-item-form {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.form-grid input,
+.form-grid textarea {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #282c34;
+}
+
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.inventory-item {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  transition: transform 0.2s;
+}
+
+.inventory-item:hover {
+  transform: translateY(-2px);
+}
+
+.inventory-item h3 {
+  margin: 0 0 10px 0;
+  color: #61dafb;
+}
+
+.inventory-item p {
+  margin: 5px 0;
+  font-size: 0.9em;
+}
+
+.error-message {
+  background-color: #ff6b6b;
+  color: white;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.add-button {
+  background-color: #4CAF50;
+}
+
+.submit-button {
+  background-color: #61dafb;
+  width: 100%;
+  max-width: 200px;
+  margin: 20px auto;
+  display: block;
+}
+
+.form-grid input,
+.form-grid textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+  color: #282c34;
+  font-size: 16px;
+}
+
+.form-grid textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.inventory-page {
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.app-container {
+  min-height: 100vh;
+  background-color: #282c34;
+  color: white;
+  padding: 0;
+  margin: 0;
+}
+
+.main-header {
+  background-color: #1a1d23;
+  padding: 1rem;
+  position: relative;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.logout-button {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.9rem;
+  padding: 8px 16px;
+  margin: 0;
+}
+
+.controls-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+
+.search-controls, .sort-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.inventory-table {
+  width: 100%;
+}
+
+.inventory-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.inventory-table th,
+.inventory-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.inventory-table th {
+  background: rgba(0, 0, 0, 0.2);
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  padding-right: 25px;
+}
+
+.search-input,
+.search-type,
+.sort-select {
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  margin-right: 10px;
+}
+
+.filter-controls {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.filter-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.sort-dropdown {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  margin-left: 8px;
+  background-color: #282c34;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 8px;
+  z-index: 1000;
+  min-width: 180px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.sort-dropdown button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 6px 12px;
+  margin: 2px 0;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 0.9rem;
+  border-radius: 4px;
+}
+
+.sort-dropdown button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sort-dropdown button.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.sort-dropdown button.clear-sort {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 6px;
+  padding-top: 8px;
+  color: #ff6b6b;
+}
+
+.inventory-table th[onClick] {
+  position: relative;
+  padding-right: 20px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.inventory-table th[onClick]:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sort-arrows {
+  display: inline-block;
+  margin-left: 5px;
+  font-size: 0.8em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.sort-arrows.active-asc .up-arrow {
+  color: white;
+}
+
+.sort-arrows.active-desc .down-arrow {
+  color: white;
+}
+
+.inventory-table th[onClick] {
+  cursor: pointer;
+  user-select: none;
+}
+
+.inventory-table th[onClick]:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.inventory-table th {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  padding-right: 25px;
+}
+
+.inventory-table th:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.sort-arrows {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  flex-direction: column;
+  line-height: 0.8;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.sort-arrows .up-arrow,
+.sort-arrows .down-arrow {
+  font-size: 12px;
+}
+
+.sort-arrows.active-asc .up-arrow {
+  color: white;
+}
+
+.sort-arrows.active-desc .down-arrow {
+  color: white;
+}
+
+.inventory-table tbody tr {
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.inventory-table tbody tr:hover {
+  background-color: rgba(97, 218, 251, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.inventory-table tbody tr:hover td {
+  color: #61dafb;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #282c34;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.status-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+}
+
+.status-buttons button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #61dafb;
+  background: transparent;
+  color: white;
+  border-radius: 4px;
+}
+
+.status-buttons button.active {
+  background: #61dafb;
+  color: #282c34;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.save-button {
+  background: #4CAF50;
+}
+
+.delete-button {
+  background: #f44336;
+}
+
+.cancel-button {
+  background: #666;
+}
+
+.delete-confirmation {
+  text-align: center;
+  padding: 1rem;
+}
+
+.delete-confirmation p {
+  margin-bottom: 1rem;
+  color: #ff6b6b;
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.confirm-delete {
+  background-color: #ff6b6b !important;
+  color: white !important;
+}
+
+.cancel-delete {
+  background-color: #666 !important;
+  color: white !important;
+}
+
+.delete-confirm {
+  text-align: center;
+  padding: 2rem;
+}
+
+.delete-confirm h2 {
+  color: #ff6b6b;
+  margin-bottom: 1.5rem;
+}
+
+.delete-confirm p {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.item-details {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+  border-radius: 4px;
+  margin: 1.5rem 0;
+  font-weight: bold;
+}
+
+.delete-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.confirm-delete {
+  background-color: #ff6b6b !important;
+  color: white !important;
+  padding: 12px 24px !important;
+}
+
+.cancel-delete {
+  background-color: #666 !important;
+  color: white !important;
+  padding: 12px 24px !important;
+}
+
+.confirm-delete:hover {
+  background-color: #ff5252 !important;
+}
+
+.cancel-delete:hover {
+  background-color: #777 !important;
+}
+
+.nav-buttons {
+  position: absolute;
+  left: 20px;
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-buttons button {
+  background: transparent;
+  color: white;
+  border: 1px solid #61dafb;
+  padding: 8px 16px;
+}
+
+.nav-buttons button.active {
+  background: #61dafb;
+  color: #282c34;
+}
+
+.main-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 1rem;
+}
+
+.logout-button {
+  position: absolute;
+  right: 20px;
+}
+
+.qr-modal {
+  text-align: center;
+}
+
+.qr-container {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  display: inline-block;
+  margin: 1rem 0;
+}
+
+.mobile-item-view {
+  padding: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.qr-button {
+  background: #4CAF50;
+}
+
+.mobile-item-view .status-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.mobile-item-view .status-buttons button {
+  padding: 1rem;
+  font-size: 1.2rem;
+}
+
+.qr-modal {
+  text-align: center;
+}
+
+.qr-container {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  display: inline-block;
+  margin: 1rem 0;
+}
+
+.qr-button {
+  background: #4CAF50;
+  color: white;
+}
+
+.item-details {
+  margin: 1rem 0;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
