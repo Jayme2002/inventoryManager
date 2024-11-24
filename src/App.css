@@ -629,9 +629,60 @@ button:hover {
 }
 
 .mobile-item-view {
-  padding: 1rem;
-  max-width: 500px;
+  padding: 20px;
+  max-width: 600px;
   margin: 0 auto;
+  background-color: #282c34;
+  min-height: 100vh;
+  color: white;
+}
+
+.mobile-item-view .form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.mobile-item-view input {
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.mobile-item-view .status-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.mobile-item-view .status-buttons button {
+  padding: 15px;
+  font-size: 18px;
+  width: 100%;
+}
+
+.mobile-item-view .modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mobile-item-view .modal-actions button {
+  width: 100%;
+  padding: 15px;
+  font-size: 18px;
+}
+
+@media (min-width: 768px) {
+  .mobile-item-view .status-buttons,
+  .mobile-item-view .modal-actions {
+    flex-direction: row;
+  }
 }
 
 .qr-button {
