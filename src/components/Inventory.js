@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { db } from '../firebase-config';
 import { collection, addDoc, query, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import ItemModal from './ItemModal';
@@ -10,16 +10,6 @@ function Inventory() {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortField, setSortField] = useState('');
   const [sortDirection, setSortDirection] = useState('asc');
-  const [newItem, setNewItem] = useState({
-    sku: '',
-    name: '',
-    price: '',
-    quantity: 1,
-    description: '',
-    consignorName: '',
-    dateAdded: new Date(),
-    status: 'available'
-  });
   const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
