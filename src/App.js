@@ -3,29 +3,21 @@ import { useAuth } from "./providers/AuthProvider";
 import SignIn from './components/SignIn';
 import Inventory from './components/Inventory';
 import ItemHistory from './components/ItemHistory';
-import { useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import ItemView from './components/ItemView';
 
 function App() {
   const { user, logout } = useAuth();
   const [currentPage, setCurrentPage] = useState('inventory');
-
-  const ProtectedRoute = ({ children }) => {
-    if (!user) {
-      return <Navigate to="/" replace />;
-    }
-    return children;
+  
+  // Get redirect from URL parameters
+  const getRedirectPath = () => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('redirect');
   };
 
-  const renderPage = () => {
-    switch (currentPage) {
-      case 'history':
-        return <ItemHistory />;
-      default:
-        return <Inventory />;
-    }
-  };
+  const redirectPath = getRedirectPath();
 
   return (
     <BrowserRouter>
@@ -44,29 +36,33 @@ function App() {
           } />
           <Route path="/" element={
             user ? (
-              <div className="app-container">
-                <header className="main-header">
-                  <nav className="nav-buttons">
-                    <button 
-                      onClick={() => setCurrentPage('inventory')}
-                      className={currentPage === 'inventory' ? 'active' : ''}
-                    >
-                      Inventory
-                    </button>
-                    <button 
-                      onClick={() => setCurrentPage('history')}
-                      className={currentPage === 'history' ? 'active' : ''}
-                    >
-                      History
-                    </button>
-                  </nav>
-                  <h1>Inventory Manager</h1>
-                  <button onClick={logout} className="logout-button">Sign Out</button>
-                </header>
-                <main>
-                  {renderPage()}
-                </main>
-              </div>
+              redirectPath ? (
+                <Navigate to={redirectPath} replace />
+              ) : (
+                <div className="app-container">
+                  <header className="main-header">
+                    <nav className="nav-buttons">
+                      <button 
+                        onClick={() => setCurrentPage('inventory')}
+                        className={currentPage === 'inventory' ? 'active' : ''}
+                      >
+                        Inventory
+                      </button>
+                      <button 
+                        onClick={() => setCurrentPage('history')}
+                        className={currentPage === 'history' ? 'active' : ''}
+                      >
+                        History
+                      </button>
+                    </nav>
+                    <h1>Inventory Manager</h1>
+                    <button onClick={logout} className="logout-button">Sign Out</button>
+                  </header>
+                  <main>
+                    {renderPage()}
+                  </main>
+                </div>
+              )
             ) : (
               <SignIn />
             )

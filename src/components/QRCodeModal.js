@@ -1,7 +1,7 @@
 import { QRCodeSVG } from 'qrcode.react';
 
 function QRCodeModal({ item, onClose }) {
-  const itemUrl = `${window.location.origin}/item/${item.id}`;
+  const itemUrl = `${window.location.origin}/?redirect=/item/${item.id}`;
 
   return (
     <div className="modal-overlay">
@@ -21,3 +21,5 @@ function QRCodeModal({ item, onClose }) {
     </div>
   );
 }
+
+export default QRCodeModal;
