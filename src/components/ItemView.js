@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { db } from '../firebase-config';
 import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { useAuth } from "../providers/AuthProvider";
 
 function ItemView() {
+  const { user } = useAuth();
   const { id } = useParams();
   const navigate = useNavigate();
   const [item, setItem] = useState(null);
@@ -12,8 +14,10 @@ function ItemView() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   useEffect(() => {
-    fetchItem();
-  }, [id]);
+    if (user) {
+      fetchItem();
+    }
+  }, [id, user]);
 
   const fetchItem = async () => {
     try {
@@ -58,6 +62,7 @@ function ItemView() {
     }
   };
 
+  if (!user) return <div>Please sign in to view this item</div>;
   if (loading) return <div>Loading...</div>;
   if (!item) return <div>Item not found</div>;
 
