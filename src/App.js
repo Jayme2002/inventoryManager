@@ -2,13 +2,13 @@ import './App.css';
 import { useAuth } from "./providers/AuthProvider";
 import SignIn from './components/SignIn';
 import Inventory from './components/Inventory';
-import ItemHistory from './components/ItemHistory';
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import ItemView from './components/ItemView';
+import AdminDashboard from './components/AdminDashboard';
 
 function App() {
-  const { user, logout } = useAuth();
+  const { user, logout, isAdmin } = useAuth();
   const [currentPage, setCurrentPage] = useState('inventory');
 
   // Define ProtectedRoute component
@@ -23,8 +23,8 @@ function App() {
   // Define renderPage function
   const renderPage = () => {
     switch (currentPage) {
-      case 'history':
-        return <ItemHistory />;
+      case 'admin':
+        return <AdminDashboard />;
       default:
         return <Inventory />;
     }
@@ -67,12 +67,14 @@ function App() {
                       >
                         Inventory
                       </button>
-                      <button 
-                        onClick={() => setCurrentPage('history')}
-                        className={currentPage === 'history' ? 'active' : ''}
-                      >
-                        History
-                      </button>
+                      {isAdmin && (
+                        <button 
+                          onClick={() => setCurrentPage('admin')}
+                          className={currentPage === 'admin' ? 'active' : ''}
+                        >
+                          Admin
+                        </button>
+                      )}
                     </nav>
                     <h1>Inventory Manager</h1>
                     <button onClick={logout} className="logout-button">Sign Out</button>

@@ -227,6 +227,7 @@ function Inventory() {
                     <span className="down-arrow">↓</span>
                   </span>
                 </th>
+                <th>Image</th>
             </tr>
             </thead>
           <tbody>
@@ -239,6 +240,17 @@ function Inventory() {
                 <td>{item.consignorName}</td>
                 <td>{item.status}</td>
                 <td>{new Date(item.dateAdded).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}</td>
+                <td>
+                  {item.imageUrl ? (
+                    <img 
+                      src={item.imageUrl} 
+                      alt={item.name} 
+                      className="item-thumbnail"
+                    />
+                  ) : (
+                    <span className="no-image">No image</span>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>

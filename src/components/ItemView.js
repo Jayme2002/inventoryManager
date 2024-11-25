@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../providers/AuthProvider';
-import { db } from '../firebase-config';
+import { db, storage } from '../firebase-config';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 function ItemView() {
   const { user } = useAuth();
@@ -10,25 +11,27 @@ function ItemView() {
   const navigate = useNavigate();
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [imageUrl, setImageUrl] = useState(item?.imageUrl || null);
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef(null);
 
-  useEffect(() => {
-    if (user) {
-      fetchItem();
-    }
-  }, [id, user]);
-
-  const fetchItem = async () => {
+  const fetchItem = useCallback(async () => {
     try {
-      const itemDoc = await getDoc(doc(db, 'inventory', id));
-      if (itemDoc.exists()) {
-        setItem({ id: itemDoc.id, ...itemDoc.data() });
+      const docRef = doc(db, 'inventory', id);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setItem({ id: docSnap.id, ...docSnap.data() });
       }
       setLoading(false);
     } catch (error) {
       console.error('Error fetching item:', error);
       setLoading(false);
     }
-  };
+  }, [id]);
+
+  useEffect(() => {
+    fetchItem();
+  }, [fetchItem]);
 
   const handleStatusChange = async (newStatus) => {
     try {
@@ -36,6 +39,30 @@ function ItemView() {
       fetchItem(); // Refresh the item data
     } catch (error) {
       console.error('Error updating status:', error);
+    }
+  };
+
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    try {
+      setUploading(true);
+      const storageRef = ref(storage, `items/${item.id}/${file.name}`);
+      const snapshot = await uploadBytes(storageRef, file);
+      const url = await getDownloadURL(snapshot.ref);
+      
+      // Update item in Firestore with new image URL
+      await updateDoc(doc(db, 'inventory', id), { 
+        imageUrl: url 
+      });
+      
+      setImageUrl(url);
+      fetchItem(); // Refresh item data
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -91,6 +118,38 @@ function ItemView() {
             Mark as Sold
           </button>
         </div>
+      </div>
+
+      <div className="image-upload-section">
+        <h3>Item Image</h3>
+        {imageUrl ? (
+          <div className="item-image-container">
+            <img src={imageUrl} alt={item.name} className="item-image" />
+            <button 
+              onClick={() => fileInputRef.current?.click()}
+              className="change-image-btn"
+            >
+              Change Image
+            </button>
+          </div>
+        ) : (
+          <div className="upload-prompt">
+            <button 
+              onClick={() => fileInputRef.current?.click()}
+              disabled={uploading}
+            >
+              {uploading ? 'Uploading...' : 'Upload Image'}
+            </button>
+          </div>
+        )}
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleImageUpload}
+          accept="image/*"
+          className="hidden"
+          style={{ display: 'none' }}
+        />
       </div>
 
       <button onClick={() => navigate('/')} className="back-button">
