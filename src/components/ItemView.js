@@ -14,6 +14,8 @@ function ItemView() {
   const [imageUrl, setImageUrl] = useState(item?.imageUrl || null);
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
 
   const fetchItem = useCallback(async () => {
     try {
@@ -42,18 +44,27 @@ function ItemView() {
     }
   };
 
-  const handleImageUpload = async (event) => {
+  const handleImageSelect = (event) => {
     const file = event.target.files[0];
     if (!file) return;
-  
+    
+    setSelectedFile(file);
+    // Create preview URL
+    const preview = URL.createObjectURL(file);
+    setPreviewUrl(preview);
+  };
+
+  const handleConfirmUpload = async () => {
+    if (!selectedFile) return;
+
     try {
       setUploading(true);
-      console.log('Starting upload for file:', file.name);
+      console.log('Starting upload for file:', selectedFile.name);
       
-      const storageRef = ref(storage, `items/${item.id}/${file.name}`);
+      const storageRef = ref(storage, `items/${item.id}/${selectedFile.name}`);
       console.log('Storage reference created');
       
-      const snapshot = await uploadBytes(storageRef, file);
+      const snapshot = await uploadBytes(storageRef, selectedFile);
       console.log('File uploaded, getting download URL');
       
       const url = await getDownloadURL(snapshot.ref);
@@ -65,6 +76,8 @@ function ItemView() {
       console.log('Firestore document updated with image URL');
       
       setImageUrl(url);
+      setSelectedFile(null);
+      setPreviewUrl(null);
       fetchItem();
     } catch (error) {
       console.error('Error uploading image:', error);
@@ -144,20 +157,42 @@ function ItemView() {
               Change Image
             </button>
           </div>
+        ) : previewUrl ? (
+          <div className="item-image-container">
+            <img src={previewUrl} alt="Preview" className="item-image" />
+            <div className="upload-actions">
+              <button 
+                onClick={handleConfirmUpload}
+                disabled={uploading}
+                className="confirm-upload-btn"
+              >
+                {uploading ? 'Uploading...' : 'Confirm Upload'}
+              </button>
+              <button 
+                onClick={() => {
+                  setSelectedFile(null);
+                  setPreviewUrl(null);
+                }}
+                className="cancel-upload-btn"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
         ) : (
           <div className="upload-prompt">
             <button 
               onClick={() => fileInputRef.current?.click()}
               disabled={uploading}
             >
-              {uploading ? 'Uploading...' : 'Upload Image'}
+              Select Image
             </button>
           </div>
         )}
         <input
           type="file"
           ref={fileInputRef}
-          onChange={handleImageUpload}
+          onChange={handleImageSelect}
           accept="image/*"
           className="hidden"
           style={{ display: 'none' }}
