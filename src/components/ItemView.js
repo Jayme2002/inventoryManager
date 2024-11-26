@@ -45,22 +45,34 @@ function ItemView() {
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
-
+  
     try {
       setUploading(true);
-      const storageRef = ref(storage, `items/${item.id}/${file.name}`);
-      const snapshot = await uploadBytes(storageRef, file);
-      const url = await getDownloadURL(snapshot.ref);
+      console.log('Starting upload for file:', file.name);
       
-      // Update item in Firestore with new image URL
+      const storageRef = ref(storage, `items/${item.id}/${file.name}`);
+      console.log('Storage reference created');
+      
+      const snapshot = await uploadBytes(storageRef, file);
+      console.log('File uploaded, getting download URL');
+      
+      const url = await getDownloadURL(snapshot.ref);
+      console.log('Download URL obtained:', url);
+      
       await updateDoc(doc(db, 'inventory', id), { 
         imageUrl: url 
       });
+      console.log('Firestore document updated with image URL');
       
       setImageUrl(url);
-      fetchItem(); // Refresh item data
+      fetchItem();
     } catch (error) {
       console.error('Error uploading image:', error);
+      console.error('Error details:', {
+        code: error.code,
+        message: error.message,
+        serverResponse: error.serverResponse
+      });
     } finally {
       setUploading(false);
     }
