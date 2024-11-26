@@ -966,3 +966,65 @@ button:hover {
   background-color: #cccccc;
   cursor: not-allowed;
 }
+
+.large-image-modal {
+  max-width: 90vw;
+  max-height: 90vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.large-item-image {
+  max-width: 100%;
+  max-height: calc(90vh - 100px);
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.item-image-preview {
+  margin-bottom: 20px;
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+}
+
+.item-preview-image {
+  max-width: 200px;
+  height: auto;
+  border-radius: 4px;
+  transition: opacity 0.2s;
+}
+
+.item-image-preview:hover .item-preview-image {
+  opacity: 0.8;
+}
+
+.view-larger {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 4px;
+  font-size: 12px;
+  text-align: center;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.close-button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #61dafb;
+  color: #282c34;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  background-color: #4fa8c7;
+}

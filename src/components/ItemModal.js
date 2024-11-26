@@ -5,6 +5,7 @@ function ItemModal({ item, onClose, onSave, onDelete, onStatusChange }) {
   const [editedItem, setEditedItem] = useState(item);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showQRCode, setShowQRCode] = useState(false);
+  const [showLargeImage, setShowLargeImage] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -70,10 +71,33 @@ function ItemModal({ item, onClose, onSave, onDelete, onStatusChange }) {
     );
   }
 
+  if (showLargeImage && item.imageUrl) {
+    return (
+      <div className="modal-overlay" onClick={() => setShowLargeImage(false)}>
+        <div className="modal-content large-image-modal" onClick={e => e.stopPropagation()}>
+          <img src={item.imageUrl} alt={item.name} className="large-item-image" />
+          <button onClick={() => setShowLargeImage(false)} className="close-button">
+            Close
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="modal-overlay">
       <div className="modal-content">
         <h2>Edit Item</h2>
+        {item.imageUrl && (
+          <div className="item-image-preview" onClick={() => setShowLargeImage(true)}>
+            <img 
+              src={item.imageUrl} 
+              alt={item.name} 
+              className="item-preview-image"
+            />
+            <span className="view-larger">Click to enlarge</span>
+          </div>
+        )}
         <form onSubmit={handleSubmit}>
           <div className="form-grid">
             <input
